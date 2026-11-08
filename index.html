@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Space Scene</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">TEXTURE MAPPING</p>
+        <h1>Space Scene</h1>
+        <p class="subtitle">A textured planet, ring, satellite, and dancing cat.</p>
+      </div>
+      <div class="status" id="status"><span class="status-dot"></span> WebGL2 scene</div>
+    </header>
+
+    <section class="viewer" aria-label="Interactive 3D scene">
+      <div id="stars" aria-hidden="true"></div>
+      <div id="renderError" role="alert" hidden></div>
+      <canvas id="glcanvas" width="1100" height="620">Your browser does not support HTML canvas.</canvas>
+      <div class="scene-help">Drag to orbit · Scroll to zoom</div>
+    </section>
+
+    <section class="toolbar" aria-label="Scene controls">
+      <button id="spinButton" type="button">Pause motion</button>
+      <button id="resetButton" type="button" class="secondary">Reset camera</button>
+      <label class="range-control" for="normalSlider">Normal detail <input id="normalSlider" type="range" min="0" max="3" step="0.05" value="1.6"><output id="normalValue">1.60</output></label>
+      <label class="range-control" for="bumpSlider">Bump strength <input id="bumpSlider" type="range" min="0" max="12" step="0.5" value="7"><output id="bumpValue">7.0</output></label>
+    </section>
+
+    <section class="materials" aria-label="Objects and textures">
+      <article class="material">
+        <div class="material-number">01</div>
+        <div><h2>Survey Planet <span>Sphere</span></h2><p>A textured planet with a separate <strong>normal map</strong>.</p><span class="method">NORMAL MAPPING</span></div>
+      </article>
+      <article class="material">
+        <div class="material-number">02</div>
+        <div><h2>Energy Ring <span>Torus</span></h2><p>A moving <strong>GIF texture</strong> with <strong>bump mapping</strong>.</p><span class="method">BUMP MAPPING + ANIMATION</span></div>
+        <img id="pulsePreview" class="gif-preview" src="textures/energy_flow.gif" alt="Animated energy texture preview">
+      </article>
+      <article class="material">
+        <div class="material-number">03</div>
+        <div><h2>Dancing Cat <span>GIF</span></h2><p>A floating cat that dances in the scene.</p><span class="method">ANIMATED TEXTURE</span></div>
+        <img id="catPreview" class="gif-preview" src="textures/dancing_cat.gif" alt="Dancing cat">
+      </article>
+      <article class="material">
+        <div class="material-number">04</div>
+        <div><h2>Satellite <span>Box parts</span></h2><p>A moving satellite with solar panels, a body, and an antenna.</p><span class="method">TEXTURED PANELS</span></div>
+      </article>
+    </section>
+    <footer>WebGL2 · Textures and animation</footer>
+  </div>
+  <script>
+    // Show the first error instead of replacing it with "Script error".
+    window.addEventListener('error', function (event) {
+      const box = document.getElementById('renderError');
+      if (!box || !box.hidden) return;
+      const details = event.message && event.message !== 'Script error.'
+        ? event.message
+        : 'Could not start the scene. Open it using GitHub Pages or a local server.';
+      box.textContent = 'Scene error: ' + details;
+      box.hidden = false;
+      console.error(event.error || details);
+    });
+  </script>
+  <script src="transforms.js"></script>
+  <script src="models.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>
